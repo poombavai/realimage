@@ -1,0 +1,82 @@
+<%= form_with(model: distributor, local: true) do |form| %>
+  <% if distributor.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(distributor.errors.count, "error") %> prohibited this distributor from being saved:</h2>
+
+      <ul>
+      <% distributor.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row col-md-8">
+    <div class="form-group col-md-4">
+      <%= form.label :name, class: "col-md-4" %>
+      <%= form.collection_select(:id, Distributor.all, :id, :name,{include_blank: "Select Distributor"},{:class => "distributor form-control", required: true }) %>
+    </div>
+
+    <div class="form-group col-md-4">
+      <%= form.label :country, class: "col-md-4" %>
+      <%= form.collection_select(:id, Country.all, :id, :name,{include_blank: "Select Country"},{:class => "country form-control", required: true }) %>
+    </div>
+    <div class="country_status1" style="display: none;color: red;">Yes</div>
+    <div class="country_status2" style="display: none;">No</div>
+  </div>
+  
+
+  <div class="row col-md-8">
+    <div class="form-group col-md-4">
+      <%= form.label :province, class: "col-md-4" %>       
+      <%= form.collection_select(:id, Province.where(:name=>"nil"), :id, :name, {include_blank: "Select Province"}, {:class => "province form-control", required: true }) %>
+    </div>  
+
+    <div class="form-group col-md-4">
+      <%= form.label :city, class: "col-md-4" %>
+      <%= form.collection_select(:id, City.where(:name=>"nil"), :id, :name, {include_blank: "Select City"}, {:class => "city form-control", required: true }) %>
+    </div>
+  </div>
+  
+<% end %>
+
+
+<script type="text/javascript">
+  $(document).ready(function () { 
+
+    $(".country").change(function () {
+      var dis_id = ($(".distributor").val());
+      var id = ($(this).val());
+      $.ajax({
+        url: "/distributors/get_provinces",
+        data: {distributor_id: dis_id, country_id: id},
+        dataType: 'script',
+      })
+    });
+
+    $(".province").change(function () {
+      var dis_id = ($(".distributor").val());
+      var country_id = ($(".country").val());
+      var id = ($(this).val());
+      $.ajax({
+        url: "/distributors/get_cities",
+        data: {distributor_id: dis_id, country_id: country_id, id: id},
+        dataType: 'script',
+      })
+    });
+
+    $(".city").change(function () {
+      var dis_id = ($(".distributor").val());
+      var country_id = ($(".country").val());
+      var province_id = ($(".province").val());
+      var id = ($(this).val());
+      $.ajax({
+        url: "/distributors/check_city",
+        data: {distributor_id: dis_id, country_id: country_id, province_id: province_id, id: id},
+        dataType: 'script',
+      })
+    });
+
+  });
+  
+</script>

@@ -1,0 +1,9 @@
+<% if @provinces %>
+	$('.province').html("<%= escape_javascript options_from_collection_for_select(@provinces, :id, :name) %>");
+    $('.country_status1').show();
+    $('.country_status2').hide();
+<% else %>
+ 	$('.province').empty();
+ 	$('.country_status1').hide();
+ 	$('.country_status2').show();
+<% end %>

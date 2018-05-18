@@ -1,0 +1,4 @@
+<% if @country_status == true %>
+   $('.country').html("<%= escape_javascript options_from_collection_for_select(@country, :id, :name) %>");
+   $('.country_message').show();
+<% end %>

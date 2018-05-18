@@ -1,0 +1,9 @@
+<% if @cities %>
+    $('.city').html("<%= escape_javascript options_from_collection_for_select(@cities, :id, :name) %>");
+	$('.country_status2').hide();
+	$('.country_status1').show();    
+<% else %>
+ 	$('.city').empty();
+ 	$('.country_status1').hide();
+ 	$('.country_status2').show();
+<% end %>
