@@ -4,8 +4,7 @@ class Distributor < ApplicationRecord
 
   def self.check_distributor
   	puts "Enter Distributor name"
-    distributor = Distributor.find_by('lower(name)', gets.chomp.downcase)
-    byebug
+    distributor = Distributor.find_by('lower(name) = ?', gets.chomp.downcase)
   	if distributor.present?
       distributor_allocations = DistributorAllocation.where(distributor_id: distributor.id)
   	  puts "Select any one:"
