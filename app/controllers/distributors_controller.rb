@@ -61,24 +61,28 @@ class DistributorsController < ApplicationController
     end
   end
 
-  def get_countries
-    @country_status = DistributorAllocation.where(distributor_id: params["distributor_id"], country_id: params["country_id"]).present?   
+  def get_countries    
+    dis_id = params["distributor_id"].to_i
+    @country_status = DistributorAllocation.where("distributor_id LIKE '%#{dis_id}%'").where(country_id: params["country_id"]).present?   
   end  
 
-  def get_provinces    
-    if DistributorAllocation.where(distributor_id: params["distributor_id"], country_id: params["country_id"]).present?
+  def get_provinces
+    dis_id = params["distributor_id"].to_i
+    if DistributorAllocation.where("distributor_id LIKE '%#{dis_id}%'").where(country_id: params["country_id"]).present?
       @provinces = Country.find(params["country_id"]).provinces
     end 
   end
 
   def get_cities
-    if DistributorAllocation.where(distributor_id: params["distributor_id"], country_id: params["country_id"], province_id: params["id"]).present?
+    dis_id = params["distributor_id"].to_i
+    if DistributorAllocation.where("distributor_id LIKE '%#{dis_id}%'").where(country_id: params["country_id"], province_id: params["id"]).present?
       @cities = Province.find(params[:id]).cities
     end
   end
 
   def check_city
-    if DistributorAllocation.where(distributor_id: params["distributor_id"], country_id: params["country_id"], province_id: params["province_id"], city_id: params["id"]).present?
+    dis_id = params["distributor_id"].to_i
+    if DistributorAllocation.where("distributor_id LIKE '%#{dis_id}%'").where(country_id: params["country_id"], province_id: params["province_id"], city_id: params["id"]).present?
       @city = true
     end
   end

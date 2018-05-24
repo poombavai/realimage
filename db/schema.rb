@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_18_111132) do
+ActiveRecord::Schema.define(version: 2018_05_23_110841) do
 
   create_table "cities", force: :cascade do |t|
     t.string "name"
@@ -29,15 +29,14 @@ ActiveRecord::Schema.define(version: 2018_05_18_111132) do
   end
 
   create_table "distributor_allocations", force: :cascade do |t|
-    t.integer "distributor_id"
     t.integer "country_id"
     t.integer "province_id"
     t.integer "city_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "distributor_id"
     t.index ["city_id"], name: "index_distributor_allocations_on_city_id"
     t.index ["country_id"], name: "index_distributor_allocations_on_country_id"
-    t.index ["distributor_id"], name: "index_distributor_allocations_on_distributor_id"
     t.index ["province_id"], name: "index_distributor_allocations_on_province_id"
   end
 
