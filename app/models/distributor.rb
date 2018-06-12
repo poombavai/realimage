@@ -2,21 +2,22 @@ class Distributor < ApplicationRecord
   has_closure_tree
 
   def self.check_distributor
-  	puts "Enter Distributor name"
+  	puts "Enter Distributor name"    
     distributor = Distributor.find_by('lower(name) = ?', gets.chomp.downcase)
   	if distributor.present?
       distributor_allocations = DistributorAllocation.where("distributor_id LIKE '%#{distributor.id}%'")
-  	  puts "Select any one:"
-  	  puts "1.Country"
-  	  puts "2.Province"
-  	  puts "3.City"
-  	  id = gets.chomp
-  	  case id
-  	  when "1"
-  	  	puts "Enter Country"
+      puts "Enter region"
         country = Country.find_by(name: gets.chomp)
   	  	if country.present?
   	  	  return distributor_allocations.find_by(country_id: country.id).present?
+          distributor_allocations.map do |e| 
+            if e.included_regions.include?(i)
+              return !e.excluded_regions.include?(i)
+            else
+              return false
+            end
+          end
+          #distributor_allocations.map { |e| e.excluded_regions.include?(i) }
   	    else
   	  	  puts "Country not found"
   	  	end
@@ -41,5 +42,7 @@ class Distributor < ApplicationRecord
   	  puts "Invalid Distributor"
   	end  	
   end
+
+
 
 end
