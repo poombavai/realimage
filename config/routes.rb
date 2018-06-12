@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  root :to => "distributors#index"
+  root :to => "distributors#new"
   
   get 'distributors/check_city'
   get 'distributors/get_provinces'

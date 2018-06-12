@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_23_110841) do
+ActiveRecord::Schema.define(version: 2018_05_29_145426) do
 
   create_table "cities", force: :cascade do |t|
     t.string "name"
@@ -56,6 +56,14 @@ ActiveRecord::Schema.define(version: 2018_05_23_110841) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "districts", force: :cascade do |t|
+    t.string "name"
+    t.integer "province_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["province_id"], name: "index_districts_on_province_id"
+  end
+
   create_table "provinces", force: :cascade do |t|
     t.string "name"
     t.string "code"
@@ -63,6 +71,12 @@ ActiveRecord::Schema.define(version: 2018_05_23_110841) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["country_id"], name: "index_provinces_on_country_id"
+  end
+
+  create_table "regions", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
